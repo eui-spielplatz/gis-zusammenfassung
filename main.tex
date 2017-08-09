@@ -102,4 +102,65 @@ Anstiegszeit:
 	\boxed{ \quad t_{LH} \approx 4 ~ \frac{C_L}{\beta_p ~ U_{DD}} \quad }
 \]
 
+\subsubsection*{Kapazität über NMOS laden}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.35\textwidth}
+	\centering
+	\begin{circuitikz}[european, scale=0.7]
+		\draw
+			(0,0) node[nigfetebulk, rotate=90](nmos1){}
+			(nmos1.G) to [short,-o] ++(-2.5, 0) node[label={[font=\footnotesize]above:$U_G(t) = U_{DD}$}]{}
+			(nmos1.D) to [short, -o] ++(-1, 0) node[label={[font=\footnotesize]above:$U_{DD}$}]{}
+			(nmos1.S) to [short,i<=$i(t)$] ++(1, 0) to [C,l^=$C_L$] ++(0,-2.4) node[ground]{}
+		;
+	\end{circuitikz}
+	\caption*{Beachte: $i(t) < 0$}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+	\begin{tabular}{r l}
+		\textbf{Startspannung} & $U_{start} = 0V$ \\
+		\textbf{Zielspannung} & $U_{end} = 0.9 ~ (U_{DD} - U_{Tn})$ \\
+		\textbf{Threshold-Spannung} & egal (immer Sättigungsbereich) \\
+		\textbf{Kanallängenmodulation} & vernachlässigt, $\lambda = 0$
+	\end{tabular}
+\end{subfigure}
+\end{figure}
+
+Anstiegszeit:
+\[
+	\boxed{ \quad t_{LH} \approx 18 ~ \frac{C_L}{\beta_n ~ (U_{DD} - U_{Tn})} \quad }
+\]
+
+\subsubsection*{Über NMOS geladene Kapazität wieder mit NMOS entladen}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.35\textwidth}
+	\centering
+	\begin{circuitikz}[european, scale=0.7]
+		\draw
+			(0,0) node[nigfetebulk](nmos1){}
+			(nmos1.S) to node[ground]{} (0, -1)
+			(nmos1.D) to ++(0, 0.5) to [short,i<=$i(t)$] ++(1.5, 0) to [C,l^=$C_L$] (1.5, -1) to node[ground]{} (1.5, -1)
+			(nmos1.G) to [short, -o] ++(-1.5, 0) node[label={[font=\footnotesize]above:$U_G(t) = U_{DD}$}]{}
+		;
+	\end{circuitikz}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+	\begin{tabular}{r l}
+		\textbf{Startspannung} & $U_{start} = U_{DD} - U_{Tn}$ (\textbf{!!!}) \\
+		\textbf{Zielspannung} & $U_{end} = 0.1 ~ (U_{DD} - U_{Tn})$ \\
+		\textbf{Threshold-Spannung} & egal (immer linearer Bereich) \\
+		\textbf{Kanallängenmodulation} & vernachlässigt, $\lambda = 0$
+	\end{tabular}
+\end{subfigure}
+\end{figure}
+
+Abfallzeit:
+\[
+	\boxed{ \quad t_{HL} \approx 3 ~ \frac{C_L}{\beta_n ~ (U_{DD} - U_{Tn})} \quad }
+\]
+
 \end{document}
