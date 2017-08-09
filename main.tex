@@ -163,4 +163,16 @@ Abfallzeit:
 	\boxed{ \quad t_{HL} \approx 3 ~ \frac{C_L}{\beta_n ~ (U_{DD} - U_{Tn})} \quad }
 \]
 
+\subsection*{Durchschnittliche Verzögerungszeit $t_p$}
+Die Durchschnittliche Verzögerungszeit $t_p$ gibt die durchschnittliche Zeit an, die verstreicht zwischen dem Moment, an dem das Eingangssignal den Schaltpunkt $50 \% ~ U_{DD}$ erreicht und dem Moment, an dem das Ausgangssignal ebenfalls den Schaltpunkt überstreicht. Es wird zwischen Anstiegs- und Abfallzeit gemittelt, $t_p = \frac{t_{pHL} + t_{pLH}}{2}$.
+
+Sei Eingangssignal ideal (rechteckförmig) und Umladung erfolgt linear. Dann ist $50 \% ~ U_{DD}$ schon nach der Hälfte der Anstiegs- / Abfallzeit erreicht, d.h. $t_{pHL} = \frac{1}{2} ~ t_{HL}$, $t_{pLH} = \frac{1}{2} ~ t_{LH}$. Somit:
+\[
+	t_p = \frac{t_{HL} + t_{LH}}{4}
+\]
+
+Für den \textbf{CMOS-Inverter} oder Schaltungen mit äquivalenten Transistoren gilt bei symmetrischer Dimensionierung ($\beta_p = \beta_n$): Die Flanken sind symmetrisch und die Verzögerungszeit ist
+\[
+	\boxed{ \quad t_p \approx \frac{2 ~ C_L}{\beta_n ~ U_{DD}} \quad }
+\]
 \end{document}
