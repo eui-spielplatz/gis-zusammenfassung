@@ -1,0 +1,105 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{subcaption}
+\usepackage[siunitx]{circuitikz}
+\usepackage{longtable}
+\usepackage{titlesec}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage[margin=2cm]{geometry}
+\usepackage[justification=centering]{caption}
+\DeclareGraphicsExtensions{.png}
+
+\titleformat*{\section}{\sffamily\LARGE\bfseries}
+\titleformat*{\subsection}{\sffamily\Large\bfseries}
+\titleformat*{\subsubsection}{\sffamily\large\bfseries}
+
+\begin{document}
+\section*{Bauelementegleichungen}
+\subsection*{Diode}
+\subsection*{MOSFET}
+\section*{Prozessparameter}
+\section*{Parasitäre Kapazitäten}
+\section*{Verzögerungszeiten}
+\subsection*{Laden / Entladen einer Kapazität}
+\[
+	i(t) = -C_L ~ \frac{\mathrm du_c(t)}{\mathrm dt}
+\]
+
+Problem: Finde $t$, stelle also um:
+\[
+	\mathrm dt = - \frac{C_L}{i(t)} ~ \mathrm du_c
+\]
+
+Wobei $i(t)$ durch die Gleichung des entsprechendes MOSFETs bestimmt wird, d.h. nur von $u_c$ abhängt. Die Gesamtzeit ergibt sich dann durch Integration:
+\[
+	t_{charge} = - \int_{U_{start}}^{U_{end}} \frac{C_L}{I_{DS}(u_c)} ~ \mathrm du_c
+\]
+
+In der Regel muss dabei eine Fallunterscheidung für die verschiedenen Betriebsbereiche des MOSFETs getroffen werden mit dazugehörigem $I_{DS}$.
+
+Wichtig: Als Endwert sollte nicht die vollständige Umladung (also $U_{DD}$ oder $0V$) verwendet werden, da dieser Wert mathematisch nie erreicht wird.
+
+\subsubsection*{Kapazität über NMOS entladen}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.35\textwidth}
+	\centering
+	\begin{circuitikz}[european, scale=0.7]
+		\draw
+			(0,0) node[nigfetebulk](nmos1){}
+			(nmos1.S) to node[ground]{} (0, -1)
+			(nmos1.D) to ++(0, 0.5) to [short,i<=$i(t)$] ++(1.5, 0) to [C,l^=$C_L$] (1.5, -1) to node[ground]{} (1.5, -1)
+			(nmos1.G) to [short, -o] ++(-1.5, 0) node[label={[font=\footnotesize]above:$U_G(t) = U_{DD}$}]{}
+		;
+	\end{circuitikz}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+	\begin{tabular}{r l}
+		\textbf{Startspannung} & $U_{start} = U_{DD}$ \\
+		\textbf{Zielspannung} & $U_{end} = 0.1 ~ U_{DD}$ \\
+		\textbf{Threshold-Spannung} & $U_{Tn} = 0.2 ~ U_{DD}$ \\
+		\textbf{Kanallängenmodulation} & vernachlässigt, $\lambda = 0$
+	\end{tabular}
+\end{subfigure}
+\end{figure}
+
+Abfallzeit:
+\[
+	\boxed{ \quad t_{HL} \approx 4 ~ \frac{C_L}{\beta_n ~ U_{DD}} \quad }
+\]
+
+\subsubsection*{Kapazität über PMOS laden}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.35\textwidth}
+	\centering
+	\begin{circuitikz}[european, scale=0.7]
+		\draw
+			(0,0) node[pigfetebulk, rotate=90](pmos1){}
+			(pmos1.G) to [short] ++(0, -1) node[ground,label={[font=\footnotesize]left:$U_G(t) = 0V$}]{}
+			(pmos1.S) to [short, -o] ++(-1, 0) node[label={[font=\footnotesize]above:$U_{DD}$}]{}
+			(pmos1.D) to [short,i<=$i(t)$] ++(1, 0) to [C,l^=$C_L$] ++(0,-2.4) node[ground]{}
+		;
+	\end{circuitikz}
+	\caption*{Beachte: $i(t) < 0$}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+	\begin{tabular}{r l}
+		\textbf{Startspannung} & $U_{start} = 0V$ \\
+		\textbf{Zielspannung} & $U_{end} = 0.9 ~ U_{DD}$ \\
+		\textbf{Threshold-Spannung} & $U_{Tp} = -0.2 ~ U_{DD}$ \\
+		\textbf{Kanallängenmodulation} & vernachlässigt, $\lambda = 0$
+	\end{tabular}
+\end{subfigure}
+\end{figure}
+
+Anstiegszeit:
+\[
+	\boxed{ \quad t_{LH} \approx 4 ~ \frac{C_L}{\beta_p ~ U_{DD}} \quad }
+\]
+
+\end{document}
