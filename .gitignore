@@ -10,3 +10,4 @@ img/*
 !src
 src/*
 !src/*.odg
+!src/*.m
