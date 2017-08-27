@@ -100,6 +100,29 @@ Mit $C_G = C_{ox}' ~ W ~ L$:
 \end{center}
 \end{figure}
 
+\section*{Dimensionierung und Gateweiten}
+\subsection*{Effektive Gateweite bestimmen}
+\begin{itemize}
+	\item Bestimmen, welche FETs im gegebenen Fall (z.B. Worst-Case) leiten
+	\item Nicht leitende FETs erhalten Gateweite 0, andere erhalten physikalische Gateweite
+	\item Mit Gateweiten (nächerungsweise) wie mit Leitwerten rechnen und Schrittweise zusammenfassen
+	\[
+		\boxed{\quad \mathrm{Reihenschaltung:} \quad W_{ges} = W_1 + W_2 + \ldots \qquad \mathrm{Parallelschaltung:} \quad W_{\parallel} = \frac{1}{\frac{1}{W_1} + \frac{1}{W_2} + \frac{1}{\ldots}} \quad}
+	\]
+	\item Effektive Gateweite ist Ergebnis für die gesamte betrachete Schaltung (z.B. n-Kanal-Zweig)
+\end{itemize}
+
+\subsection*{Dimensionierung auf symmetrische Schaltflanken im Worst-Case}
+\begin{itemize}
+\item Effektive Gateweite des schon bekannten Zweiges bestimmen
+\item Für symmetrische Schaltflanken muss gelten:
+\[
+\boxed{\quad W_{P, \mathrm{eff}} \overset{!}{=} \beta_R ~ W_{N, \mathrm{eff}} \overset{\mathrm{typ}.}{=} 2 ~ W_{N, \mathrm{eff}} \quad}
+\]
+\item Längste MOSFET-Kette im zu dimensionierenden Kanalzweig mit Länge $N$ erhält $W = \frac{W_{\mathrm{eff}}}{N}$
+\item Parallele Kettenschaltungen auf gleiche effektive Gateweite dimensionieren
+\end{itemize}
+
 \section*{Verzögerungszeiten}
 \subsection*{Laden / Entladen einer Kapazität}
 \[
