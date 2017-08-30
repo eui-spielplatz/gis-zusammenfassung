@@ -20,28 +20,26 @@
 \begin{document}
 \section*{Bauelementegleichungen}
 \subsection*{Diode}
-\subsubsection*{Diodenkennlinie:}
 \[
 	\boxed{ \quad I_D = I_S \left(e^{\frac{U_D}{U_T}}-1\right) \quad }
 \]
-Gilt für $U_D > 0V$. Wenn $U_D \leq 0V$, dann ist der Strom (idealisiert) $I_D = 0A$.
 
 \subsection*{MOSFET}
-\subsubsection*{Sperrbereich:}
+\subsubsection*{Sperrbereich}
 \[
 	I_{Dn/p} = 0
 \]
 wenn $ U_{GSn}-U_{Tn} \leq 0$ beim n-MOSFET\\
 wenn $ U_{GSp}-U_{Tp} \geq 0$ beim p-MOSFET
 
-\subsubsection*{Widerstandsbereich:}
+\subsubsection*{Widerstandsbereich}
 \[
 	\boxed{ \quad I_{Dn/p} = \pm\beta_{n/p}\left[(U_{GSn/p}-U_{Tn/p}) U_{DSn/p}-\dfrac{U_{DSn/p}^2}{2}\right](1\pm\lambda_{n/p}\ U_{DSn/p}) \quad }
 \]
 wenn $0<U_{DSn}<U_{GSn}-U_{Tn}$ und $\lambda_n>0$ beim n-MOSFET (+)\\
 wenn $U_{GSp}-U_{Tp}<U_{DSp}<0$ und $\lambda_p>0$ beim p-MOSFET (-)
 
-\subsubsection*{Sättigungsbereich:}
+\subsubsection*{Sättigungsbereich}
 \[
 	\boxed{ \quad I_{Dn/p}=\pm\dfrac{1}{2}\beta_{n/p}\left(U_{GSn/p}-U_{Tn/p}\right)^2\ (1\pm\lambda_{n/p}\ U_{DSn/p}) \quad }
 \]
