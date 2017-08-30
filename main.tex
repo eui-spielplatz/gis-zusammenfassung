@@ -100,6 +100,14 @@ Mit $C_G = C_{ox}' ~ W ~ L$:
 \end{center}
 \end{figure}
 
+Für symmetrische Dimensionierung $\frac{\beta_n}{\beta_p} = 1$ gilt:
+\[
+	U_{IL} = \frac{3 ~ U_{DD} - 3 ~ |U_{Tp}| + 5 ~ U_{Tn}}{8} \quad \implies \quad NM_L \approx U_{IL} ~~ \text{für} ~~ U_{OL} \approx 0
+\]
+\[
+	U_{IH} = \frac{5 ~ U_{DD} - 5 ~ |U_{Tp}| + 3 ~ U_{Tn}}{8} \quad \implies \quad NM_H \approx U_{DD} - U_{IH} ~~ \text{für} ~~ U_{OH} \approx U_{DD}
+\]
+
 \section*{Dimensionierung und Gateweiten}
 \subsection*{Effektive Gateweite bestimmen}
 \begin{itemize}
@@ -122,6 +130,11 @@ Mit $C_G = C_{ox}' ~ W ~ L$:
 \item Längste MOSFET-Kette im zu dimensionierenden Kanalzweig mit Länge $N$ erhält $W = \frac{W_{\mathrm{eff}}}{N}$
 \item Parallele Kettenschaltungen auf gleiche effektive Gateweite dimensionieren
 \end{itemize}
+
+\subsection*{Schaltschwelle des CMOS-Inverters}
+\[
+	\boxed{ \quad U_e = \frac{U_{DD} + \sqrt{\beta_n / \beta_p} ~ U_{Tn} - |U_{Tp}|}{1 + \sqrt{\beta_n + \beta_p}} \quad }
+\]
 
 \section*{Verzögerungszeiten}
 \subsection*{Laden / Entladen einer Kapazität}
