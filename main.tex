@@ -296,4 +296,113 @@ Für den \textbf{CMOS-Inverter} oder Schaltungen mit äquivalenten Transistoren 
 \[
 	\boxed{ \quad t_p \approx \frac{2 ~ C_L}{\beta_n ~ U_{DD}} \quad }
 \]
+
+\section*{Schmitt-Trigger}
+\begin{figure}[H]
+\centering
+\begin{subfigure}{0.44\textwidth}
+	\scalebox{0.8}{\begin{circuitikz}[european, scale=0.7]
+		% inverter FETs
+		\draw
+			(0, 0) node[pigfetebulk, label={right:$P_1$}](pmos1){}
+			(0,-3) node[pigfetebulk, label={right:$P_2$}](pmos2){}
+			(0,-6) node[nigfetebulk, label={right:$N_2$}](nmos2){}
+			(0,-9) node[nigfetebulk, label={right:$N_1$}](nmos1){};
+		
+		\node (uddrail) at ($(pmos1.S) + (0,  0.5)$) {};
+		\node (gndrail) at ($(nmos1.S) + (0, -0.5)$) {};
+
+		% inverter interconnects
+		\draw
+			(uddrail) to [short] (pmos1.S)
+			(pmos1.D) to [short] (pmos2.S)
+			(pmos2.D) to [short] (nmos2.D)
+			(nmos2.S) to [short] (nmos1.D)
+			(nmos1.S) to [short] (gndrail) node[ground]{};
+
+		% input interconnects
+		\draw
+			(pmos1.G) to [short, -*]
+			(pmos2.G) to [short, -*]
+			(nmos2.G) to [short]
+			(nmos1.G);
+
+		% input terminal
+		\draw
+			($0.5*(pmos2.G)+0.5*(nmos2.G)$) to [short, *-o] ++(-1,0)
+			node[label={[font=\small]left:$U_e$}] {};
+
+		\node (center) at ($0.5*(pmos2.D)+0.5*(nmos2.D)$) {};
+
+		% output + output terminal
+		\node (output) at ($(center)+(8,0)$) {};
+		\draw
+			(center) to [short, *-o]
+			(output) node[label={[font=\small]right:$U_a$}] {};
+
+		% N_3 NMOS
+		\draw
+			($0.5*(nmos1.D)+0.5*(nmos2.S)+(3,0)$) node[nigfetebulk, rotate=-90, label={below:$N_3$}](nmos3){}
+			($0.5*(nmos1.D)+0.5*(nmos2.S)$) [short, *-] to (nmos3.S)
+			(nmos3.G |- center) [short, *-] to (nmos3.G);
+
+		\draw ($0.5*(nmos1.D)+0.5*(nmos2.S)+(1.5,0.1)$) node[label={[font=\small]below:$U_X$}] {};
+
+		\node (n3drain) at ($(nmos3.D) + (1,0)$) {};
+		\draw
+			(nmos3.D) [short] to
+			(n3drain) to [short, -*] (uddrail -| n3drain);
+
+		% P_3 PMOS
+		\draw
+			($0.5*(pmos1.D)+0.5*(pmos2.S)+(3,0)$) node[nigfetebulk, rotate=90, yscale=-1, label={above:$P_3$}](pmos3){}
+			($0.5*(pmos1.D)+0.5*(pmos2.S)$) [short, *-] to (pmos3.S)
+			(pmos3.G |- center) [short, *-] to (pmos3.G);
+
+		\draw ($0.5*(pmos1.D)+0.5*(pmos2.S)+(1.5,-0.1)$) node[label={[font=\small]above:$U_Y$}] {};
+
+		\node (p3drain) at ($(pmos3.D) + (2,0)$) {};
+		\draw
+			(pmos3.D) [short] to
+			(p3drain) to [short] (gndrail -| p3drain) node[ground]{};
+
+		% Udd rail
+		\draw
+			(uddrail) [short] to
+			(uddrail -| n3drain) [short, -o] to
+			(output |- uddrail) node[label={[font=\small]right:$U_{dd}$}] {};;
+	\end{circuitikz}}
+\end{subfigure}
+\begin{subfigure}{0.54\textwidth}
+	\paragraph{Bei steigendem $U_e = 0V \rightarrow U_{DD}$} beginnt $N_1$ beim Überschreiten von $U_e = U_{Tn}$ im Sättigungsbereich zu leiten. $N_3$ leitet ständig an der Grenze zwischen \textit{Sperr}- und Sättigungsbereich ($U_{GSN3} = U_{DSN3} = U_{DD} - U_X$) $\implies$ $U_X$ fällt. Sobald $U_{GSN2} = U_e - U_X > U_{Tn}$ kippt der Schmitt-Trigger. \newline
+
+	\paragraph{Bei fallendem $U_e = U_{DD} \rightarrow 0V$} beginnt $P_1$ beim Unterschreiten von $U_e = U_{DD} + U_{Tp}$ im Sättigungsbereich zu leiten. $P_3$ leitet ständig an der Grenze zwischen \textit{Sperr}- und Sättigungsbereich ($U_{GSP3} = U_{DSP3} = U_{DD} - U_Y$) $\implies$ $U_Y$ steigt. Sobald $U_{GSP2} = U_e - U_Y < U_{Tp}$ kippt der Schmitt-Trigger.
+\end{subfigure}
+\end{figure}
+
+\subsection*{Schaltschwellen}
+Für $\beta_{n/p} = k_{n/p} ~ \frac{W_{n/p}}{L}$ und Näherung $I_{DN2} \approx 0$ bzw. $I_{DP2} \approx 0$ kurz vor dem Schaltzeitpunkt folgt für die obere Schwelle $U_{M+}$ und für die untere Schwelle $U_{M-}$:
+\[
+	\boxed { \quad U_{M+} = \frac{\sqrt{W_{N3} / W_{N1}} ~ U_{DD} + U_{Tn}}{\sqrt{W_{N3}/W_{N1}} + 1} \quad } \qquad \boxed { \quad U_{M-} = \frac{U_{DD} + U_{Tp}}{\sqrt{W_{P3}/W_{P1}} + 1} \quad }
+\]
+Obere und untere Schwelle können \textit{unabhängig} voneinander durch Dimensionierung von $N_1$ / $N_3$ bzw. $P_1$ / $P_3$ konfiguriert werden.
+
+\subsubsection*{Ansatz beispielhaft für NMOS}
+Schaltung kippt, sobald $N_2$ leitet, d.h. $U_{GSN2} = U_e - U_X > U_{Tn}$, Schaltpunkt also bei $U_X = U_e - U_{Tn}$. Bestimme $U_e$ für Kipppunkt.\\
+Ansatz: $I_{DN3} = I_{DN1}$ mit $N_3$ \ldots Sättigung, $N_1$ \ldots Grenze linear / Sättigung, einfacher Sättigung.
+\[
+	\frac{1}{2} \beta_{N3} ~ (U_{GSN3} - U_{Tn})^2 = \frac{1}{2} \beta_{N1} ~ (U_{GSN1} - U_{Tn})^2
+\]
+Mit $U_{GSN3} = U_{DD} - U_X$ und $U_{GSN1} = U_e$ folgt:
+\[
+	\beta_{N3} ~ (U_{DD} - U_X - U_{Tn})^2 =\beta_{N1} ~ (U_e - U_{Tn})^2	
+\]
+Setze $U_X = U_e - U_{Tn}$ ein:
+\[
+	\beta_{N3} ~ (U_{DD} - U_e)^2 =\beta_{N1} ~ (U_e - U_{Tn})^2	
+\]
+\[
+	\sqrt{\frac{\beta_{N3}}{\beta_{N1}}} ~ (U_{DD} - U_e) = U_e - U_{Tn}
+\]
+Umformen nach $U_{M+} = U_e$ führt mit $\beta \sim W$ zur obigen Gleichung.
 \end{document}
