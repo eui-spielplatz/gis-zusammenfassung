@@ -388,15 +388,15 @@ Beim Umschalten leiten alle Transistoren kurz, woraus ein dynamischer Querstrom 
 
 		% P_3 PMOS
 		\draw
-			($0.5*(pmos1.D)+0.5*(pmos2.S)+(3,0)$) node[nigfetebulk, rotate=90, yscale=-1, label={above:$P_3$}](pmos3){}
-			($0.5*(pmos1.D)+0.5*(pmos2.S)$) [short, *-] to (pmos3.S)
+			($0.5*(pmos1.D)+0.5*(pmos2.S)+(3,0)$) node[pigfetebulk, rotate=90, yscale=-1, label={above:$P_3$}](pmos3){}
+			($0.5*(pmos1.D)+0.5*(pmos2.S)$) [short, *-] to (pmos3.D)
 			(pmos3.G |- center) [short, *-] to (pmos3.G);
 
 		\draw ($0.5*(pmos1.D)+0.5*(pmos2.S)+(1.5,-0.1)$) node[label={[font=\small]above:$U_Y$}] {};
 
-		\node (p3drain) at ($(pmos3.D) + (2,0)$) {};
+		\node (p3drain) at ($(pmos3.S) + (2,0)$) {};
 		\draw
-			(pmos3.D) [short] to
+			(pmos3.S) [short] to
 			(p3drain) to [short] (gndrail -| p3drain) node[ground]{};
 
 		% Udd rail
