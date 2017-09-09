@@ -300,17 +300,28 @@ Für den \textbf{CMOS-Inverter} oder Schaltungen mit äquivalenten Transistoren 
 
 \newpage
 \section*{Verlustleistung}
-Allgemein setzt sich die Verlustleistung einer CMOS-Schaltung aus drei Teilleistungen zusammen. Der statischen Verlustleistung $P_{stat}$, wenn dauerhaft über Transistoren ein Strom fließt, sowie die dynamische Verlustleistung zum Laden der Gate-Kapazitäten $P_{dynC}$ und der dynamischen Verlustleistung durch den Querstrom, der beim Umschalten eines Inverters fließt, wenn beide Transistoren leiten $P_{dynQ}$:
+Allgemein setzt sich die Verlustleistung einer \textit{CMOS-Schaltung} aus drei Teilleistungen zusammen:
+\begin{itemize}
+\item $P_{stat}$: Statische Verlustleistung, wenn dauerhaft über Transistoren ein Strom fließt
+\item $P_{dynC}$: Dynamische Verlustleistung zum Laden der Gate-Kapazitäten
+\item $P_{dynQ}$: Dynamischen Verlustleistung durch Querstrom, der beim Umschalten eines Inverters fließt, während beide Transistoren leiten
+\end{itemize}
 \[ \boxed{P=P_{stat}+P_{dynC}+P_{dynQ}} \]
+
+\raggedright
 Bei CMOS beläuft sich die statische Verlustleistung $P_{stat}$ im wesentlichen auf die Drain-Leckstöme $I_{Si}\approx10^{-10}A$
 \[ \boxed{P_{stat}=U_{DD}\sum_n I_{Si,n}} \]
-Die dynamische Verlustleistung, die durch die Lade- und Entladevorgänge abgegeben wird berechnet sich durch $P_{dynC}=\frac{1}{T}\displaystyle\int_Tu(t)i(t)\mathrm{d}t$.\\
-Für den Umschaltvorgang von $0$ auf $U_{DD}$ und zurück, sowie der Frequenz $f_C=1/T$ und der Schaltwahrscheinlichkeit $p$ gilt:
+Die dynamische Verlustleistung, die durch die Lade- und Entladevorgänge abgegeben wird, berechnet sich durch $P_{dynC}=\frac{1}{T}\displaystyle\int_T u(t) ~ i(t) ~ \mathrm{d}t$.\\
+Für den Umschaltvorgang von $0$ auf $U_{DD}$ und zurück bei der Frequenz $f_C=1/T$ und der Schaltwahrscheinlichkeit $p$ gilt:
 \[ \boxed{P_{dynC}=p\ f_C\ C_L \ U_{DD}^2} \]
-Beim Umschalten leiten alle Transistorn kurz, woraus ein dynamischer Querstrom $I_{DQ}\approx\frac{\beta_n}{2}\left(\frac{U_{DD}}{2}-U_{Tn}\right)^2$ folgt. Die Worst-Case-Abschätzung, dass der maximale dynamische Querstrom für die ganze Umschaltzeit $t_{HL,LH}$ fließt, ergibt dann:
-\[ \boxed{P_{dynQ}=U_{DD}I_{DQ}\frac{t_{HL}}{T}} \] 
+Beim Umschalten leiten alle Transistoren kurz, woraus ein dynamischer Querstrom von max. $I_{DQ}\approx\frac{\beta_n}{2}\left(\frac{U_{DD}}{2}-U_{Tn}\right)^2$ folgt. Worst-Case-Abschätzung:
+\begin{itemize}
+\item Im Mittel fließt halber max. dynamischer Querstrom während Umschaltzeit: $I = I_{DQ} / 2$
+\item $t_{LH} = t_{HL}$, \textit{immer} 2 Umschaltvorgänge pro Taktperiode $T$ (z.B. Taktverteilnetzwerk)
+\end{itemize}
+\[ P_{dynQ} = U_{DD} ~ I ~ \frac{t_{HL} + t_{LH}}{T} = U_{DD} ~ I_{DQ} ~ \frac{t_{HL}}{T} \] 
 
-\subsection{Power-Delay-Product}
+\subsection*{Power-Delay-Product}
 \begin{multicols}{3}
 \centering
 	Power-Delay-Product: \[ \boxed{W_{PDP}=P\cdot t_p} \]
