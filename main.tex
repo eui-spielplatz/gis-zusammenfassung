@@ -156,12 +156,21 @@ Problem: Finde $t$, stelle also um:
 
 Wobei $i(t)$ durch die Gleichung des entsprechendes MOSFETs bestimmt wird, d.h. nur von $u_c$ abhängt. Die Gesamtzeit ergibt sich dann durch Integration:
 \[
-	t_{charge} = - \int_{U_{start}}^{U_{end}} \frac{C_L}{I_{DS}(u_c)} ~ \mathrm du_c
+	t_{charge} = \pm \int_{U_{\text{start}}}^{U_{\text{end}}} \frac{C_L}{I_{DS}(u_c)} ~ \mathrm du_c
 \]
 
-In der Regel muss dabei eine Fallunterscheidung für die verschiedenen Betriebsbereiche des MOSFETs getroffen werden mit dazugehörigem $I_{DS}$.
+Mit ``+'' \ldots laden, ``-'' \ldots entladen. In der Regel muss dabei eine Fallunterscheidung für die verschiedenen Betriebsbereiche des MOSFETs getroffen werden mit dazugehörigem $I_{DS}$.
 
 Wichtig: Als Endwert sollte nicht die vollständige Umladung (also $U_{DD}$ oder $0V$) verwendet werden, da dieser Wert mathematisch nie erreicht wird.
+
+Häufig auftretende Integrale:
+\[
+	\int_{U_{\text{start}}}^{U_{\text{end}}} \frac{1}{(a - u)^2} ~ \mathrm du = \left[ \frac{1}{a - u} \right]_{U_{\text{start}}}^{U_{\text{end}}}
+\]
+
+\[
+	\int_{U_{\text{start}}}^{U_{\text{end}}} \frac{1}{b ~ u - u^2 / 2} ~ \mathrm du = \left[ \frac{1}{b} ~ \ln \left( \frac{u}{u - 2b} \right) \right]_{U_{\text{start}}}^{U_{\text{end}}}
+\]
 
 \subsubsection*{Kapazität über NMOS entladen}
 
