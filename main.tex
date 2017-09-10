@@ -156,12 +156,10 @@ Problem: Finde $t$, stelle also um:
 
 Wobei $i(t)$ durch die Gleichung des entsprechendes MOSFETs bestimmt wird, d.h. nur von $u_c$ abhängt. Die Gesamtzeit ergibt sich dann durch Integration:
 \[
-	t_{charge} = \pm \int_{U_{\text{start}}}^{U_{\text{end}}} \frac{C_L}{I_{DS}(u_c)} ~ \mathrm du_c
+	t_{charge} = \pm \int_{U_{\text{start}}}^{U_{\text{end}}} \frac{C_L}{i(u_c)} ~ \mathrm du_c
 \]
 
-Mit ``+'' \ldots laden, ``-'' \ldots entladen. In der Regel muss dabei eine Fallunterscheidung für die verschiedenen Betriebsbereiche des MOSFETs getroffen werden mit dazugehörigem $I_{DS}$.
-
-Wichtig: Als Endwert sollte nicht die vollständige Umladung (also $U_{DD}$ oder $0V$) verwendet werden, da dieser Wert mathematisch nie erreicht wird.
+Mit ``+'' \ldots laden, ``-'' \ldots entladen und Pfeilung so, dass $i > 0$. Als Endwert sollte nicht die vollständige Umladung (also z.B. $U_{DD}$ oder $0V$) verwendet werden, da dieser Wert mathematisch nie erreicht wird.
 
 Häufig auftretende Integrale:
 \[
@@ -213,7 +211,7 @@ Abfallzeit:
 			(0,0) node[pigfetebulk, rotate=90](pmos1){}
 			(pmos1.G) to [short] ++(0, -1) node[ground,label={[font=\footnotesize]left:$U_G(t) = 0V$}]{}
 			(pmos1.S) to [short, -o] ++(-1, 0) node[label={[font=\footnotesize]above:$U_{DD}$}]{}
-			(pmos1.D) to [short,i<=$i(t)$] ++(1, 0) to [C,l^=$C_L$] ++(0,-2.4) node[ground]{}
+			(pmos1.D) to [short,i>=$i(t)$] ++(1, 0) to [C,l^=$C_L$] ++(0,-2.4) node[ground]{}
 		;
 	\end{circuitikz}
 	\caption*{Beachte: $i(t) < 0$}
@@ -244,7 +242,7 @@ Anstiegszeit:
 			(0,0) node[nigfetebulk, rotate=90](nmos1){}
 			(nmos1.G) to [short,-o] ++(-2.5, 0) node[label={[font=\footnotesize]above:$U_G(t) = U_{DD}$}]{}
 			(nmos1.D) to [short, -o] ++(-1, 0) node[label={[font=\footnotesize]above:$U_{DD}$}]{}
-			(nmos1.S) to [short,i<=$i(t)$] ++(1, 0) to [C,l^=$C_L$] ++(0,-2.4) node[ground]{}
+			(nmos1.S) to [short,i>=$i(t)$] ++(1, 0) to [C,l^=$C_L$] ++(0,-2.4) node[ground]{}
 		;
 	\end{circuitikz}
 	\caption*{Beachte: $i(t) < 0$}
