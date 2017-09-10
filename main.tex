@@ -316,12 +316,14 @@ Für konstanten Leckstrom $I_{\text{leck}}$ entlädt sich $C$ von $U_{\text{star
 
 \subsection*{Dimensionierung auf symmetrische Schaltflanken im Worst-Case}
 \begin{itemize}
-\item Effektive Gateweite des schon bekannten Zweiges bestimmen
-\item Für symmetrische Schaltflanken muss gelten:
+\item Effektive Gateweite des Zweiges bestimmen, für symmetrische Schaltflanken muss gelten
 \[
 \boxed{\quad W_{P, \mathrm{eff}} \overset{!}{=} \beta_R ~ W_{N, \mathrm{eff}} \overset{\mathrm{typ}.}{=} 2 ~ W_{N, \mathrm{eff}} \quad}
 \]
-\item Längste MOSFET-Kette im zu dimensionierenden Kanalzweig mit Länge $N$ erhält $W = \frac{W_{\mathrm{eff}}}{N}$
+\item Längste MOSFET-Kette im zu dimensionierenden Kanalzweig mit Länge $N$ erhält
+\[
+	W_1 = W_2 = \ldots = W_N = N ~ W_{\mathrm{eff}}
+\]
 \item Parallele Kettenschaltungen auf gleiche effektive Gateweite dimensionieren
 \end{itemize}
 
