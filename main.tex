@@ -10,28 +10,37 @@
 \usepackage{amsmath}
 \usepackage{multicol}
 \usepackage{float}
-\usepackage[margin=2cm]{geometry}
+\usepackage[left=1.5cm, right=3cm, top=1.5cm, bottom=1.5cm]{geometry}
 \usepackage[justification=centering]{caption}
+\usepackage[txtcentered=true, height=40pt, width=70pt]{thumbs}
 \DeclareGraphicsExtensions{.png}
 
 \titleformat*{\section}{\sffamily\LARGE\bfseries}
 \titleformat*{\subsection}{\sffamily\Large\bfseries}
 \titleformat*{\subsubsection}{\sffamily\large\bfseries}
 
-\begin{document}
-\section*{Bauelementegleichungen}
-\subsection*{Diode}
-\[
-	\boxed{ \quad I_D = I_S \left(e^{\frac{U_D}{U_T}}-1\right) \quad }
-\]
+\pagenumbering{arabic}
 
-\subsection*{MOSFET}
+\newcommand{\fancythumb}[2]{
+	\addthumb{#1}{\large\sffamily\textbf{\space\space#1\vspace{5pt}}}{white}{#2}
+}
+
+\begin{document}
+\section*{MOSFET-Gleichungen}
+\fancythumb{MOSFET}{red}
 \subsubsection*{Sperrbereich}
-\[
-	I_{Dn/p} = 0
-\]
-wenn $ U_{GSn}-U_{Tn} \leq 0$ beim n-MOSFET\\
-wenn $ U_{GSp}-U_{Tp} \geq 0$ beim p-MOSFET
+\vspace{-15pt}
+\begin{figure}[H]
+	\begin{subfigure}{0.49\textwidth}
+		\[
+			I_{Dn/p} = 0
+		\]
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		wenn $ U_{GSn}-U_{Tn} \leq 0$ beim n-MOSFET\\
+		wenn $ U_{GSp}-U_{Tp} \geq 0$ beim p-MOSFET
+	\end{subfigure}
+\end{figure}
 
 \subsubsection*{Widerstandsbereich}
 \[
@@ -75,7 +84,10 @@ wenn $U_{DSp}\leq U_{GSp}-U_{Tp}<0$ und $\lambda_p>0$ beim p-MOSFET (-)
 \end{subfigure}
 \end{figure}
 
+\newpage
+
 \section*{Prozessparameter}
+\fancythumb{$\beta$ / $k$ / $C$}{black}
 \subsection*{Prozessverstärkungsfaktor (\textit{transconductance coefficient})}
 \[
 	\boxed { \quad \beta_n = k_n ~ \frac{W}{L_{eff}} \quad } \qquad \boxed { \quad \beta_p = k_p ~ \frac{W}{L_{eff}} \quad }
@@ -101,6 +113,7 @@ Mit $C_G = C_{ox}' ~ W ~ L$:
 \end{center}
 
 \section*{Störabstände (\textit{noise margins})}
+\fancythumb{$\text{NM}_{L/H}$}{blue}
 \begin{figure}[H]
 \begin{center}
 	\includegraphics[width=0.9\textwidth]{img/noisemargin.pdf}
@@ -115,35 +128,10 @@ Für symmetrische Dimensionierung $\frac{\beta_n}{\beta_p} = 1$ gilt:
 	U_{IH} = \frac{5 ~ U_{DD} - 5 ~ |U_{Tp}| + 3 ~ U_{Tn}}{8} \quad \implies \quad NM_H \approx U_{DD} - U_{IH} ~~ \text{für} ~~ U_{OH} \approx U_{DD}
 \]
 
-\section*{Dimensionierung und Gateweiten}
-\subsection*{Effektive Gateweite bestimmen}
-\begin{itemize}
-	\item Bestimmen, welche FETs im gegebenen Fall (z.B. Worst-Case) leiten
-	\item Nicht leitende FETs erhalten Gateweite 0, andere erhalten physikalische Gateweite
-	\item Mit Gateweiten (nächerungsweise) wie mit Leitwerten rechnen und Schrittweise zusammenfassen
-	\[
-		\boxed{\quad \mathrm{Parallelschaltung:} \quad W_{\parallel} = W_1 + W_2 + \ldots \qquad \mathrm{Reihenschaltung:} \quad W_{ges} = \frac{1}{\frac{1}{W_1} + \frac{1}{W_2} + \frac{1}{\ldots}} \quad}
-	\]
-	\item Effektive Gateweite ist Ergebnis für die gesamte betrachete Schaltung (z.B. n-Kanal-Zweig)
-\end{itemize}
-
-\subsection*{Dimensionierung auf symmetrische Schaltflanken im Worst-Case}
-\begin{itemize}
-\item Effektive Gateweite des schon bekannten Zweiges bestimmen
-\item Für symmetrische Schaltflanken muss gelten:
-\[
-\boxed{\quad W_{P, \mathrm{eff}} \overset{!}{=} \beta_R ~ W_{N, \mathrm{eff}} \overset{\mathrm{typ}.}{=} 2 ~ W_{N, \mathrm{eff}} \quad}
-\]
-\item Längste MOSFET-Kette im zu dimensionierenden Kanalzweig mit Länge $N$ erhält $W = \frac{W_{\mathrm{eff}}}{N}$
-\item Parallele Kettenschaltungen auf gleiche effektive Gateweite dimensionieren
-\end{itemize}
-
-\subsection*{Schaltschwelle des CMOS-Inverters}
-\[
-	\boxed{ \quad U_e = \frac{U_{DD} + \sqrt{\beta_n / \beta_p} ~ U_{Tn} - |U_{Tp}|}{1 + \sqrt{\beta_n / \beta_p}} \quad }
-\]
+\newpage
 
 \section*{Verzögerungszeiten}
+\fancythumb{$t_p$ / $t_{LH}$}{teal}
 \subsection*{Laden / Entladen einer Kapazität}
 \[
 	i(t) = -C_L ~ \frac{\mathrm du_c(t)}{\mathrm dt}
@@ -251,7 +239,7 @@ Anstiegszeit:
 	\begin{tabular}{r l}
 		\textbf{Startspannung} & $U_{start} = 0V$ \\
 		\textbf{Zielspannung} & $U_{end} = 0.9 ~ (U_{DD} - U_{Tn})$ \\
-		\textbf{Threshold-Spannung} & egal (immer Sättigungsbereich) \\
+		\textbf{Threshold-Spannung} & egal (immer Sättigung) \\
 		\textbf{Kanallängenmodulation} & vernachlässigt, $\lambda = 0$
 	\end{tabular}
 \end{subfigure}
@@ -312,7 +300,39 @@ Für konstanten Leckstrom $I_{\text{leck}}$ entlädt sich $C$ von $U_{\text{star
 \]
 
 \newpage
+
+\section*{Dimensionierung und Gateweiten}
+\fancythumb{Dimens.}{brown}
+\subsection*{Effektive Gateweite bestimmen}
+\begin{itemize}
+	\item Bestimmen, welche FETs im gegebenen Fall (z.B. Worst-Case) leiten
+	\item Nicht leitende FETs erhalten Gateweite 0, andere erhalten physikalische Gateweite
+	\item Mit Gateweiten (nächerungsweise) wie mit Leitwerten rechnen und Schrittweise zusammenfassen
+	\[
+		\boxed{\quad \mathrm{Parallelschaltung:} \quad W_{\parallel} = W_1 + W_2 + \ldots \qquad \mathrm{Reihenschaltung:} \quad W_{ges} = \frac{1}{\frac{1}{W_1} + \frac{1}{W_2} + \frac{1}{\ldots}} \quad}
+	\]
+	\item Effektive Gateweite ist Ergebnis für die gesamte betrachete Schaltung (z.B. n-Kanal-Zweig)
+\end{itemize}
+
+\subsection*{Dimensionierung auf symmetrische Schaltflanken im Worst-Case}
+\begin{itemize}
+\item Effektive Gateweite des schon bekannten Zweiges bestimmen
+\item Für symmetrische Schaltflanken muss gelten:
+\[
+\boxed{\quad W_{P, \mathrm{eff}} \overset{!}{=} \beta_R ~ W_{N, \mathrm{eff}} \overset{\mathrm{typ}.}{=} 2 ~ W_{N, \mathrm{eff}} \quad}
+\]
+\item Längste MOSFET-Kette im zu dimensionierenden Kanalzweig mit Länge $N$ erhält $W = \frac{W_{\mathrm{eff}}}{N}$
+\item Parallele Kettenschaltungen auf gleiche effektive Gateweite dimensionieren
+\end{itemize}
+
+\subsection*{Schaltschwelle des CMOS-Inverters}
+\[
+	\boxed{ \quad U_e = \frac{U_{DD} + \sqrt{\beta_n / \beta_p} ~ U_{Tn} - |U_{Tp}|}{1 + \sqrt{\beta_n / \beta_p}} \quad }
+\]
+
+\newpage
 \section*{Verlustleistung}
+\fancythumb{Leistung}{violet}
 Allgemein setzt sich die Verlustleistung einer \textit{CMOS-Schaltung} aus drei Teilleistungen zusammen:
 \begin{itemize}
 \item $P_{stat}$: Statische Verlustleistung, wenn dauerhaft über Transistoren ein Strom fließt
@@ -344,6 +364,7 @@ Beim Umschalten leiten alle Transistoren kurz, woraus ein dynamischer Querstrom 
 
 \newpage
 \section*{Schmitt-Trigger}
+\fancythumb{Schmitt}{orange}
 \begin{figure}[H]
 \centering
 \begin{subfigure}{0.44\textwidth}
